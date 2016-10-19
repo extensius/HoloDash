@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{8E1D5F12-564B-A0AC-ED16-28A527478D02}") = "HoloDash", "Assembly-CSharp.csproj", "{060B4996-AB4C-2611-07EA-2D039D07986C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{060B4996-AB4C-2611-07EA-2D039D07986C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{060B4996-AB4C-2611-07EA-2D039D07986C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{060B4996-AB4C-2611-07EA-2D039D07986C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{060B4996-AB4C-2611-07EA-2D039D07986C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
