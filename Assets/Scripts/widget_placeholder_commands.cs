@@ -52,33 +52,23 @@ public class widget_placeholder_commands : MonoBehaviour {
         text.text = "Moving...?";
         if (gaze_gesture_manager.Instance.IsManipulating)
         {
-            Vector3 moveVector = Vector3.zero;
-//            Debug.Log("Move Vec Init: " + moveVector);
+            Transform camera = Camera.main.gameObject.transform;
 
+            /* Version 2 */
+            transform.position = camera.position + 2 * camera.forward;
+            transform.rotation = Quaternion.LookRotation(transform.position - camera.position);
+            /* */
+
+            /* Version 1 * /
+            Vector3 moveVector = Vector3.zero;
             //Calculate the moveVector as position - manipulationPreviousPosition.
             moveVector = position - manipulationStartPosition;
-//            Debug.Log("Move Vec: " + moveVector);
-
             //Update the manipulationPreviousPosition with the current position.
             manipulationStartPosition = position;
-//            Debug.Log("Position init: " + transform.position);
-
             //Increment this transform's position by the moveVector.
-            transform.position += 2f * moveVector;
-//            Debug.Log("Position: " + transform.position);
-
-            //OR//
-            Transform camera = Camera.main.gameObject.transform;
-//            Vector3 resultantVector = position - camera.position;
-//            Debug.Log("Camera: "+ camera.position);
-//            transform.position = resultantVector;
-//            Vector3 moveVector = resultantVector.normalized;// * 2;
-//            transform.position = moveVector;
+            transform.position += 4f * moveVector;
             transform.rotation = Quaternion.LookRotation(transform.position - camera.position);
-
-            //Vector3 posVec = new Vector3(x, y * (height + verticleBuffer), z);
-            //Instantiate(widget, posVec, Quaternion.LookRotation(posVec - t.position));
-
+            /* */
         }
     }
 }

@@ -22,6 +22,10 @@ public class gaze_gesture_manager : MonoBehaviour
 
     public Transform widget;
 
+    void log_vec(string name, Vector3 vec) {
+        Debug.Log(name+": " + vec.x + ", " + vec.y + ", " + vec.z);
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -56,12 +60,24 @@ public class gaze_gesture_manager : MonoBehaviour
         });
         keywords.Add("add", () => {
             Transform camera = Camera.main.gameObject.transform;
+
+            /* Version 2 */
+            Vector3 positionVec = camera.position + 2 * camera.forward;
+            Instantiate(widget, positionVec, Quaternion.LookRotation(positionVec - camera.position));
+            log_vec("PosVec", positionVec);
+            /* */
+
+            /* Version 1 * /
             float distance = 2f;
             float angle = camera.rotation.y *2;
             float x = distance * Mathf.Sin(angle);
             float z = distance * Mathf.Cos(angle);
             Vector3 posVec = new Vector3(x + camera.position.x, camera.position.y, z + camera.position.z);
             Instantiate(widget, posVec, Quaternion.LookRotation(posVec - camera.position));
+
+            log_vec("Widget", posVec);
+
+            /**/
         });
 
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
@@ -130,8 +146,8 @@ public class gaze_gesture_manager : MonoBehaviour
             if (oldFocusObject != null) {
                 oldFocusObject.SendMessageUpwards("OnFocusLoss");
             }
-//            recognizer.CancelGestures();
-//            recognizer.StartCapturingGestures();
+            ManipulationRecognizer.CancelGestures();
+            ManipulationRecognizer.StartCapturingGestures();
         }
     }
 
