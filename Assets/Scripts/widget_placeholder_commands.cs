@@ -54,12 +54,12 @@ public class widget_placeholder_commands : MonoBehaviour {
         {
             Transform camera = Camera.main.gameObject.transform;
 
-            /* Version 2 */
+            /* Version 2 * /
             transform.position = camera.position + 2 * camera.forward;
             transform.rotation = Quaternion.LookRotation(transform.position - camera.position);
             /* */
 
-            /* Version 1 * /
+            /* Version 1 */
             Vector3 moveVector = Vector3.zero;
             //Calculate the moveVector as position - manipulationPreviousPosition.
             moveVector = position - manipulationStartPosition;
