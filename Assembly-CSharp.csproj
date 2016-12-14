@@ -60,9 +60,11 @@
      <Compile Include="Assets\HoloToolkit\Utilities\Scripts\Interpolator.cs" />
      <Compile Include="Assets\HoloToolkit\Utilities\Scripts\SimpleTagalong.cs" />
      <Compile Include="Assets\HoloToolkit\Utilities\Scripts\Singleton.cs" />
+     <Compile Include="Assets\Scripts\debug.cs" />
      <Compile Include="Assets\Scripts\gaze_gesture_manager.cs" />
      <Compile Include="Assets\Scripts\hud_grid_handler.cs" />
      <Compile Include="Assets\Scripts\web_request.cs" />
+     <Compile Include="Assets\Scripts\widget_container_manager.cs" />
      <Compile Include="Assets\Scripts\widget_placeholder_commands.cs" />
      <Compile Include="Assets\Scripts\world_cursor.cs" />
      <None Include="Assets\HoloToolkit\Utilities\Shaders\VertexLitConfigurableTransparent.shader" />

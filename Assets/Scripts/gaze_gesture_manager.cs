@@ -20,20 +20,22 @@ public class gaze_gesture_manager : MonoBehaviour
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
-    public Transform widget;
-
-    void log_vec(string name, Vector3 vec) {
-        Debug.Log(name+": " + vec.x + ", " + vec.y + ", " + vec.z);
-    }
+//    public Transform widget;
+    public widget_container_manager widget_manager;//= new widget_container_manager();
+//    public GameObject widget_container;
 
     // Use this for initialization
     void Start()
     {
         Instance = this;
 
+        //Get access to the widget_container_manager script on the Widgets_Container game object
+        widget_manager = GameObject.Find("Widgets_Container").GetComponent<widget_container_manager>();
+
         //Speech Rec
         keywords.Add("exit", () => { Application.Quit(); });
         keywords.Add("add grid", () => {
+            /*
             Transform t = Camera.main.gameObject.transform;
             float distance = 2f;
             float number_of_steps = 5;
@@ -51,6 +53,7 @@ public class gaze_gesture_manager : MonoBehaviour
                     Instantiate(widget, posVec, Quaternion.LookRotation(posVec - t.position));
                 }
             }
+            */
         });
         keywords.Add("remove all", () => { /* TODO: add */ });
         keywords.Add("remove", () => {
@@ -59,15 +62,32 @@ public class gaze_gesture_manager : MonoBehaviour
             }
         });
         keywords.Add("add", () => {
-            Transform camera = Camera.main.gameObject.transform;
+            /* Version 5 */
+            widget_manager.addIncWidget();
+            /* */
 
-            /* Version 2 */
+
+            /* Version 4 * /
+            widget_manager.addRayCastWidget(FocusedObject);
+            /* */
+
+
+            /* Version 3 * /
+            //            widget_container_manager.addWidget();
+            //            widget_manager = new widget_container_manager();
+            //            widget_container_manager.staticTest();
+            widget_manager.addWidget();
+            /* */
+
+            /* Version 2 * /
+            Transform camera = Camera.main.gameObject.transform;
             Vector3 positionVec = camera.position + 2 * camera.forward;
-            Instantiate(widget, positionVec, Quaternion.LookRotation(positionVec - camera.position));
-            log_vec("PosVec", positionVec);
+            Object newWidget = Instantiate(widget, positionVec, Quaternion.LookRotation(positionVec - camera.position));
+            debug.log_vec("PosVec", positionVec);
             /* */
 
             /* Version 1 * /
+            Transform camera = Camera.main.gameObject.transform;
             float distance = 2f;
             float angle = camera.rotation.y *2;
             float x = distance * Mathf.Sin(angle);
