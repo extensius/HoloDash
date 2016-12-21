@@ -50,7 +50,7 @@ public class widget_placeholder_commands : MonoBehaviour {
     void PerformManipulationUpdate(Vector3 position)
     {
         text.text = "Moving...?";
-        if (gaze_gesture_manager.Instance.IsManipulating)
+//        if (gaze_gesture_manager.Instance.IsManipulating)
         {
             Transform camera = Camera.main.gameObject.transform;
 

@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.VR.WSA.Input;
 using UnityEngine.Windows.Speech;
 
-public class gaze_gesture_manager : MonoBehaviour
+public class global_input_manager : MonoBehaviour
 {
-    public static gaze_gesture_manager Instance { get; private set; }
+    public static global_input_manager Instance { get; private set; }
 
     // Represents the hologram that is currently being gazed at.
     public GameObject FocusedObject { get; private set; }
@@ -20,9 +20,7 @@ public class gaze_gesture_manager : MonoBehaviour
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
-//    public Transform widget;
-    public widget_container_manager widget_manager;//= new widget_container_manager();
-//    public GameObject widget_container;
+    private widget_container_manager widget_manager; //Widget Container Manager
 
     // Use this for initialization
     void Start()
@@ -34,30 +32,10 @@ public class gaze_gesture_manager : MonoBehaviour
 
         //Speech Rec
         keywords.Add("exit", () => { Application.Quit(); });
-        keywords.Add("add grid", () => {
-            /*
-            Transform t = Camera.main.gameObject.transform;
-            float distance = 2f;
-            float number_of_steps = 5;
-            float height = .3f;
-            float verticleBuffer = .1f;
-            float step_size = (Mathf.PI / 2) / (number_of_steps - 1);//NOTE: Step size must be > 1
-            for (int y = -1; y <= 1; y++)
-            {
-                for (float angle = -Mathf.PI / 4; angle <= Mathf.PI / 4 + step_size / 2; angle += step_size)//The + step_size/2 is because of rounding errors
-                {
-                    float x = distance * Mathf.Sin(angle);
-                    float z = distance * Mathf.Cos(angle);
-
-                    Vector3 posVec = new Vector3(x + t.position.x, y * (height + verticleBuffer), z + t.position.z);
-                    Instantiate(widget, posVec, Quaternion.LookRotation(posVec - t.position));
-                }
-            }
-            */
-        });
         keywords.Add("remove all", () => { /* TODO: add */ });
         keywords.Add("remove", () => {
-            if (FocusedObject != null) {
+            if (FocusedObject != null)
+            {
                 FocusedObject.SendMessageUpwards("OnDelete");
             }
         });
@@ -66,11 +44,9 @@ public class gaze_gesture_manager : MonoBehaviour
             widget_manager.addIncWidget();
             /* */
 
-
             /* Version 4 * /
             widget_manager.addRayCastWidget(FocusedObject);
             /* */
-
 
             /* Version 3 * /
             //            widget_container_manager.addWidget();
@@ -163,7 +139,8 @@ public class gaze_gesture_manager : MonoBehaviour
         // start detecting fresh gestures again.
         if (FocusedObject != oldFocusObject)
         {
-            if (oldFocusObject != null) {
+            if (oldFocusObject != null)
+            {
                 oldFocusObject.SendMessageUpwards("OnFocusLoss");
             }
             ManipulationRecognizer.CancelGestures();
@@ -190,14 +167,15 @@ public class gaze_gesture_manager : MonoBehaviour
         if (keywords.TryGetValue(args.text, out keywordAction))                                     //<<<
         {
             keywordAction.Invoke();
-//            text.text += "Request Recognized\n";
+            //            text.text += "Request Recognized\n";
         }
     }
 
 
     private void ManipulationRecognizer_ManipulationStartedEvent(InteractionSourceKind source, Vector3 position, Ray ray)
     {
-        if (FocusedObject != null) {
+        if (FocusedObject != null)
+        {
             IsManipulating = true;
             ManipulationPosition = position;
             FocusedObject.SendMessageUpwards("PerformManipulationStart", position);
@@ -206,7 +184,8 @@ public class gaze_gesture_manager : MonoBehaviour
 
     private void ManipulationRecognizer_ManipulationUpdatedEvent(InteractionSourceKind source, Vector3 position, Ray ray)
     {
-        if (FocusedObject != null) {
+        if (FocusedObject != null)
+        {
             IsManipulating = true;
             ManipulationPosition = position;
             FocusedObject.SendMessageUpwards("PerformManipulationUpdate", position);
@@ -216,6 +195,11 @@ public class gaze_gesture_manager : MonoBehaviour
     private void ManipulationRecognizer_ManipulationCompletedEvent(InteractionSourceKind source, Vector3 position, Ray ray)
     {
         IsManipulating = false;
+        if (FocusedObject != null)
+        {
+            ManipulationPosition = position;
+            FocusedObject.SendMessageUpwards("PerformManipulationCompleted", position);
+        }
     }
 
     private void ManipulationRecognizer_ManipulationCanceledEvent(InteractionSourceKind source, Vector3 position, Ray ray)
