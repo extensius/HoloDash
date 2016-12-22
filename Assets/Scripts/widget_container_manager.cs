@@ -121,14 +121,24 @@ public class widget_container_manager : MonoBehaviour {
         return vec;
     }
 
-    public Transform getSnapTransform(Vector3 position) {//TODO:
-        Transform retval = null;
+    public Transform snapTransform(Transform t) {
+        int col = 0, row = 2;
 
-        float angleR = Mathf.Asin(position.x / radius);
-        
-//        retval.position = ... //working here...
+        //Snap x
+        if (t.position.x > .5){col = 3;}//Col 3
+        else if (t.position.x > 0){col = 2;}//Col 2
+        else if (t.position.x > -.5){col = 1;}//Col 1
+        //else col is 0 which is default
 
-        return retval;
+        //Snap y
+        if (t.position.y > .15) { row = 0; }//Row 2
+        else if (t.position.y > -.15) { row = 1; }//Row 1
+        //else row is 0 which is default
+
+        //Return the snap_transform
+        t.position = getNewWidgetVec3(row, col);
+        t.rotation = Quaternion.Euler(0, angleD[col], 0);
+        return t;
     }
 
     static void traverse(GameObject obj)

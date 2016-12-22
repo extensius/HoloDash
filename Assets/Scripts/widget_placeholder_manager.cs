@@ -49,8 +49,15 @@ public class widget_placeholder_manager : MonoBehaviour
         manipulationStartPosition = position;
     }
 
-    void PerformManipulationCompleted(Vector3 position) {
+    void PerformManipulationCanceled(Vector3 position)
+    {
+        text.text = "Move Canceled";
+    }
+
+    void PerformManipulationCompleted(Transform position) {
         text.text = "Moving ended!";
+
+//        if(transform.position.x > )
 
 
         //Snap to grid...

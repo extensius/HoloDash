@@ -198,13 +198,21 @@ public class global_input_manager : MonoBehaviour
         if (FocusedObject != null)
         {
             ManipulationPosition = position;
-            FocusedObject.SendMessageUpwards("PerformManipulationCompleted", position);
+            Transform widget_placholder_temp = FocusedObject.transform.parent.parent.transform;
+            Transform widget_snap_transform = widget_manager.snapTransform(widget_placholder_temp);
+            FocusedObject.SendMessageUpwards("PerformManipulationCompleted", widget_snap_transform);
         }
     }
 
     private void ManipulationRecognizer_ManipulationCanceledEvent(InteractionSourceKind source, Vector3 position, Ray ray)
     {
         IsManipulating = false;
+        if (FocusedObject != null)
+        {
+            Transform widget_placholder_temp = FocusedObject.transform.parent.parent.transform;
+            Transform widget_snap_transform = widget_manager.snapTransform(widget_placholder_temp);
+            FocusedObject.SendMessageUpwards("PerformManipulationCanceled", widget_snap_transform);
+        }
     }
 
 }
